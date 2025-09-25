@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2025-09-25
+
+### Fixed
+- Fixed install generator template path issue
+- Resolved gemspec warnings with proper version constraints
+- Updated GitHub repository URL to pageinteract organization
+- Fixed create new item functionality to capture full text instead of first character
+- Added newly created items to dropdown with selected state
+- Improved dark mode support and theme handling
+
+### Changed
+- Updated Rails dependency to support versions 7.0 through 8.x
+- Set Tailwind CSS dependency specifically to version 4.x
+- Improved SVG rendering for close buttons on badges
+- Enhanced ID comparison for consistent string handling
+
 ## [0.1.0] - 2025-09-25
 
 ### Added

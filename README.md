@@ -49,7 +49,7 @@ gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails
 Or to use a specific version/tag:
 
 ```ruby
-gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails_notion_like_multiselect.git', tag: 'v0.1.0'
+gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails_notion_like_multiselect.git', tag: 'v0.1.1'
 ```
 
 Or to use a specific branch:

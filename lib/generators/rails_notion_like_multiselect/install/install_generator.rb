@@ -7,7 +7,7 @@ module RailsNotionLikeMultiselect
 
       def copy_javascript_controller
         copy_file(
-          '../../../../app/javascript/rails_notion_multiselect_controller.js',
+          'rails_notion_multiselect_controller.js',
           'app/javascript/controllers/rails_notion_multiselect_controller.js'
         )
       end
@@ -55,7 +55,7 @@ module RailsNotionLikeMultiselect
           ) %>
         USAGE
 
-        say "\n📚 For more options and examples, see: https://github.com/yourusername/rails_notion_like_multiselect",
+        say "\n📚 For more options and examples, see: https://github.com/pageinteract/rails_notion_like_multiselect",
             :cyan
       end
     end
