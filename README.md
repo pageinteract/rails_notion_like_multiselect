@@ -49,7 +49,7 @@ gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails
 Or to use a specific version/tag:
 
 ```ruby
-gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails_notion_like_multiselect.git', tag: 'v0.1.1'
+gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails_notion_like_multiselect.git', tag: 'v0.3.0'
 ```
 
 Or to use a specific branch:
@@ -75,9 +75,26 @@ rails generate rails_notion_like_multiselect:install
 ```
 
 This will:
-- Copy the Stimulus controller to your application
-- Register the controller in your Stimulus application
-- Create an initializer with default configuration
+- Copy the Stimulus controller to `app/javascript/controllers/rails_notion_multiselect_controller.js`
+- The controller is automatically registered by Stimulus auto-loading
+- No additional configuration needed - it just works!
+
+### Why the JavaScript Controller is Copied
+
+**Modern Rails Architecture:** In Rails 7+ with importmaps, gems cannot directly serve JavaScript files through the asset pipeline. The Stimulus controller must be in your app's `app/javascript/controllers/` directory to be discovered by Stimulus's `eagerLoadControllersFrom` auto-loading mechanism.
+
+**Gem Architecture:**
+```
+Gem provides:
+├── 💎 Ruby helper methods (multiselect_field)
+├── 🛠️ Install generator 
+└── 📄 JavaScript controller template
+
+Your app receives:
+├── app/javascript/controllers/
+│   └── rails_notion_multiselect_controller.js (copied & production-ready)
+└── Enhanced views using multiselect_field helper
+```
 
 ### Prerequisites
 

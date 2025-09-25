@@ -39,69 +39,69 @@ module RailsNotionLikeMultiselect
         # Determine theme-specific classes based on theme option
         is_dark_theme = theme == 'dark'
         is_light_theme = theme == 'light'
-        
+
         # Support both light and dark modes with proper contrast
         badge_classes = if is_dark_theme
                           # Force dark theme styles
                           case badge_color
                           when 'green'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-green-900/30 text-green-200 border border-green-800'
+                              'bg-green-900/30 text-green-200 border border-green-800'
                           when 'purple'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-purple-900/30 text-purple-200 border border-purple-800'
+                              'bg-purple-900/30 text-purple-200 border border-purple-800'
                           when 'yellow'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-yellow-900/30 text-yellow-200 border border-yellow-800'
+                              'bg-yellow-900/30 text-yellow-200 border border-yellow-800'
                           when 'red'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-red-900/30 text-red-200 border border-red-800'
+                              'bg-red-900/30 text-red-200 border border-red-800'
                           else
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-blue-900/30 text-blue-200 border border-blue-800'
+                              'bg-blue-900/30 text-blue-200 border border-blue-800'
                           end
                         elsif is_light_theme
                           # Force light theme styles
                           case badge_color
                           when 'green'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-green-100 text-green-800 border border-green-200'
+                              'bg-green-100 text-green-800 border border-green-200'
                           when 'purple'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-purple-100 text-purple-800 border border-purple-200'
+                              'bg-purple-100 text-purple-800 border border-purple-200'
                           when 'yellow'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-yellow-100 text-yellow-800 border border-yellow-200'
+                              'bg-yellow-100 text-yellow-800 border border-yellow-200'
                           when 'red'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-red-100 text-red-800 border border-red-200'
+                              'bg-red-100 text-red-800 border border-red-200'
                           else
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-blue-100 text-blue-800 border border-blue-200'
+                              'bg-blue-100 text-blue-800 border border-blue-200'
                           end
                         else
                           # Auto mode - use Tailwind's dark: variants
                           case badge_color
                           when 'green'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-green-100 text-green-800 border border-green-200 ' +
-                            'dark:bg-green-900/30 dark:text-green-200 dark:border-green-800'
+                              'bg-green-100 text-green-800 border border-green-200 ' +
+                              'dark:bg-green-900/30 dark:text-green-200 dark:border-green-800'
                           when 'purple'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-purple-100 text-purple-800 border border-purple-200 ' +
-                            'dark:bg-purple-900/30 dark:text-purple-200 dark:border-purple-800'
+                              'bg-purple-100 text-purple-800 border border-purple-200 ' +
+                              'dark:bg-purple-900/30 dark:text-purple-200 dark:border-purple-800'
                           when 'yellow'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-yellow-100 text-yellow-800 border border-yellow-200 ' +
-                            'dark:bg-yellow-900/30 dark:text-yellow-200 dark:border-yellow-800'
+                              'bg-yellow-100 text-yellow-800 border border-yellow-200 ' +
+                              'dark:bg-yellow-900/30 dark:text-yellow-200 dark:border-yellow-800'
                           when 'red'
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-red-100 text-red-800 border border-red-200 ' +
-                            'dark:bg-red-900/30 dark:text-red-200 dark:border-red-800'
+                              'bg-red-100 text-red-800 border border-red-200 ' +
+                              'dark:bg-red-900/30 dark:text-red-200 dark:border-red-800'
                           else
                             'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium gap-1 ' +
-                            'bg-blue-100 text-blue-800 border border-blue-200 ' +
-                            'dark:bg-blue-900/30 dark:text-blue-200 dark:border-blue-800'
+                              'bg-blue-100 text-blue-800 border border-blue-200 ' +
+                              'dark:bg-blue-900/30 dark:text-blue-200 dark:border-blue-800'
                           end
                         end
 
@@ -131,26 +131,26 @@ module RailsNotionLikeMultiselect
 
           # Input container with selected items inside
           input_container_class = if is_dark_theme
-                                     'flex flex-wrap items-center gap-1.5 rounded-lg ' +
-                                     'bg-gray-900 py-2 px-3 text-sm text-white ' +
-                                     'border border-gray-700 ' +
-                                     'focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent ' +
-                                     'min-h-[42px]'
-                                   elsif is_light_theme
-                                     'flex flex-wrap items-center gap-1.5 rounded-lg ' +
-                                     'bg-white py-2 px-3 text-sm text-gray-900 ' +
-                                     'border border-gray-300 ' +
-                                     'focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent ' +
-                                     'min-h-[42px]'
-                                   else
-                                     'flex flex-wrap items-center gap-1.5 rounded-lg ' +
-                                     'bg-white dark:bg-gray-900 ' +
-                                     'py-2 px-3 text-sm ' +
-                                     'text-gray-900 dark:text-white ' +
-                                     'border border-gray-300 dark:border-gray-700 ' +
-                                     'focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent ' +
-                                     'min-h-[42px]'
-                                   end
+                                    'flex flex-wrap items-center gap-1.5 rounded-lg ' +
+                                      'bg-gray-900 py-2 px-3 text-sm text-white ' +
+                                      'border border-gray-700 ' +
+                                      'focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent ' +
+                                      'min-h-[42px]'
+                                  elsif is_light_theme
+                                    'flex flex-wrap items-center gap-1.5 rounded-lg ' +
+                                      'bg-white py-2 px-3 text-sm text-gray-900 ' +
+                                      'border border-gray-300 ' +
+                                      'focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent ' +
+                                      'min-h-[42px]'
+                                  else
+                                    'flex flex-wrap items-center gap-1.5 rounded-lg ' +
+                                      'bg-white dark:bg-gray-900 ' +
+                                      'py-2 px-3 text-sm ' +
+                                      'text-gray-900 dark:text-white ' +
+                                      'border border-gray-300 dark:border-gray-700 ' +
+                                      'focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent ' +
+                                      'min-h-[42px]'
+                                  end
           input_container_html = content_tag :div,
                                              class: input_container_class,
                                              data: { action: 'click->rails-notion-multiselect#focusInput' } do
@@ -161,45 +161,50 @@ module RailsNotionLikeMultiselect
               selected.map do |item|
                 item_id, item_name = extract_item_data(item, value_method, text_method)
 
-                content_tag :span,
-                            class: badge_classes,
-                            data: { item_id: item_id } do
-                  content_tag(:span, item_name, data: { item_name: true }) +
-                    button_class = if is_dark_theme
-                                     'ml-1 group relative h-3.5 w-3.5 rounded-sm hover:bg-gray-400/20'
-                                   elsif is_light_theme
-                                     'ml-1 group relative h-3.5 w-3.5 rounded-sm hover:bg-gray-600/20'
-                                   else
-                                     'ml-1 group relative h-3.5 w-3.5 rounded-sm hover:bg-gray-600/20 dark:hover:bg-gray-400/20'
-                                   end
+                button_class = if is_dark_theme
+                                 'ml-1 group relative h-3.5 w-3.5 rounded-sm hover:bg-gray-400/20'
+                               elsif is_light_theme
+                                 'ml-1 group relative h-3.5 w-3.5 rounded-sm hover:bg-gray-600/20'
+                               else
+                                 'ml-1 group relative h-3.5 w-3.5 rounded-sm hover:bg-gray-600/20 dark:hover:bg-gray-400/20'
+                               end
+
+                name_span = content_tag(:span, item_name, data: { item_name: item_name })
+
+                badge_html = content_tag :span,
+                                         class: badge_classes,
+                                         data: { item_id: item_id } do
+                  name_span +
                     content_tag(:button,
                                 type: 'button',
                                 data: { action: 'click->rails-notion-multiselect#handleRemove', item_id: item_id },
                                 class: button_class) do
-                      content_tag(:svg, 
-                                        xmlns: 'http://www.w3.org/2000/svg',
-                                        viewBox: '0 0 14 14',
-                                        fill: 'none',
-                                        stroke: 'currentColor',
-                                        'stroke-width': '2',
-                                        'stroke-linecap': 'round',
-                                        'stroke-linejoin': 'round',
-                                        class: 'h-3.5 w-3.5 opacity-60 group-hover:opacity-100') do
+                      content_tag(:svg,
+                                  xmlns: 'http://www.w3.org/2000/svg',
+                                  viewBox: '0 0 14 14',
+                                  fill: 'none',
+                                  stroke: 'currentColor',
+                                  'stroke-width': '2',
+                                  'stroke-linecap': 'round',
+                                  'stroke-linejoin': 'round',
+                                  class: 'h-3.5 w-3.5 opacity-60 group-hover:opacity-100') do
                         tag.path(d: 'M4 4l6 6m0-6l-6 6')
                       end
                     end
                 end
+
+                badge_html
               end.join.html_safe
             end
 
             # Input field
             input_placeholder_class = if is_dark_theme
-                                         'placeholder-gray-500'
-                                       elsif is_light_theme
-                                         'placeholder-gray-400'
-                                       else
-                                         'placeholder-gray-400 dark:placeholder-gray-500'
-                                       end
+                                        'placeholder-gray-500'
+                                      elsif is_light_theme
+                                        'placeholder-gray-400'
+                                      else
+                                        'placeholder-gray-400 dark:placeholder-gray-500'
+                                      end
             input_html = tag.input(type: 'text',
                                    placeholder: selected.empty? ? placeholder : '',
                                    data: { rails_notion_multiselect_target: 'input' },
@@ -225,10 +230,10 @@ module RailsNotionLikeMultiselect
                         class: 'max-h-60 overflow-auto py-1' do
               collection.map do |item|
                 item_id, item_name = extract_item_data(item, value_method, text_method)
-                is_selected = selected.any? { |s| 
-                  s_id, _ = extract_item_data(s, value_method, text_method)
+                is_selected = selected.any? do |s|
+                  s_id, = extract_item_data(s, value_method, text_method)
                   s_id == item_id
-                }
+                end
 
                 content_tag :div,
                             data: {
@@ -260,7 +265,7 @@ module RailsNotionLikeMultiselect
           hidden_inputs_html = content_tag :div, data: { rails_notion_multiselect_target: 'hiddenInputs' } do
             if selected.any?
               selected.map do |item|
-                item_id, _ = extract_item_data(item, value_method, text_method)
+                item_id, = extract_item_data(item, value_method, text_method)
                 tag.input(type: 'hidden', name: input_name, value: item_id)
               end.join.html_safe
             else
@@ -284,26 +289,44 @@ module RailsNotionLikeMultiselect
 
           label_html + input_container_html + dropdown_html + hidden_inputs_html + help_text_html
         end
+      end
 
-        # Extracts id and name from various item formats (objects, hashes, strings)
-        # Returns [id, name] as strings
-        # @param item [Object] The item to extract data from
-        # @param value_method [Symbol] Method to call for the value/id
-        # @param text_method [Symbol] Method to call for display text
-        def extract_item_data(item, value_method = :id, text_method = :name)
-          if item.respond_to?(value_method) && item.respond_to?(text_method)
-            # ActiveRecord object or similar with custom methods
-            [item.send(value_method).to_s, item.send(text_method).to_s]
-          elsif item.is_a?(Hash)
-            # Hash with symbol or string keys
-            id = item[value_method] || item[value_method.to_s] || item[:id] || item['id']
-            name = item[text_method] || item[text_method.to_s] || item[:name] || item['name']
-            [id.to_s, name.to_s]
-          else
-            # Fallback - treat as string/number (both value and display are the same)
-            [item.to_s, item.to_s]
+      # Extracts id and name from various item formats (objects, hashes, strings)
+      # Returns [id, name] as strings
+      # @param item [Object] The item to extract data from
+      # @param value_method [Symbol] Method to call for the value/id
+      # @param text_method [Symbol] Method to call for display text
+      # NOTE: This method must be public to be accessible from view context
+      def extract_item_data(item, value_method = :id, text_method = :name)
+        # Handle nil items
+        return ['', ''] if item.nil?
+
+        # Handle string items (like tags) - both ID and name are the same
+        return [item, item] if item.is_a?(String)
+
+        # Handle ActiveRecord objects with specified methods
+        if item.respond_to?(value_method) && item.respond_to?(text_method)
+          begin
+            value = item.send(value_method)
+            text = item.send(text_method)
+            return [value.to_s, text.to_s]
+          rescue StandardError
+            # Fallback to default behavior
           end
         end
+
+        # Handle Hash objects with symbol or string keys
+        if item.is_a?(Hash)
+          id = item[value_method] || item[value_method.to_s] || item[:id] || item['id']
+          name = item[text_method] || item[text_method.to_s] || item[:name] || item['name']
+          return [id.to_s, name.to_s]
+        end
+
+        # Handle numeric items
+        return [item.to_s, item.to_s] if item.is_a?(Numeric)
+
+        # Final fallback - treat as string
+        [item.to_s, item.to_s]
       end
     end
   end

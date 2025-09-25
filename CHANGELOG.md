@@ -5,6 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-09-25
+
+### Added
+- Production-ready code with clean, optimized implementation
+- Enhanced error handling and code organization
+- Improved code style and formatting consistency
+
+### Changed
+- **MAJOR CLEANUP:** Removed all debug logging for production use
+- Optimized `extract_item_data` method with early returns and cleaner structure
+- Improved code formatting and indentation throughout
+- Enhanced badge creation logic with better variable organization
+- Streamlined Ruby code following best practices
+
+### Fixed
+- Cleaned production JavaScript controller (removed debug console.log statements)
+- Improved error handling without verbose logging
+- Better performance with simplified method implementations
+
+### Technical Improvements
+- Early returns in `extract_item_data` method for better performance
+- Cleaner variable assignments and code flow
+- Production-optimized JavaScript controller
+- Consistent code style across all files
+
+## [0.2.1] - 2025-09-25
+
+### Fixed
+- **CRITICAL FIX:** Removed `private` visibility from `extract_item_data` method - method is now public and accessible from Rails view context
+- Enhanced data type handling for strings, ActiveRecord objects, hashes, and numeric values with comprehensive fallbacks
+- Added robust error handling and conditional logging for better debugging without breaking when Rails is not available
+- Fixed empty badge display issue when using ActiveRecord objects and string arrays
+- Improved nil handling to prevent crashes with empty collections
+
+### Changed
+- Enhanced `extract_item_data` method with better type detection and logging
+- Added comprehensive comments explaining method visibility requirements for Rails views
+- Improved error recovery when ActiveRecord method calls fail
+
+### Technical Details
+- **Root Cause:** The `private` keyword prevented Rails views from accessing the helper method, causing undefined method errors
+- **Solution:** Made method public with enhanced error handling and logging
+- **Compatibility:** Maintains full backward compatibility while fixing core functionality
+
 ## [0.2.0] - 2025-09-25
 
 ### Added

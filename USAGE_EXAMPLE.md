@@ -1,12 +1,14 @@
 # Usage Example for Rails Notion-Like Multiselect
 
+**Version 0.3.0** - Production-ready with optimized performance and clean architecture.
+
 ## Quick Start Guide
 
 ### 1. Add to Gemfile
 
 ```ruby
 # Gemfile
-gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails_notion_like_multiselect.git', tag: 'v0.2.0'
+gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails_notion_like_multiselect.git', tag: 'v0.3.0'
 ```
 
 ### 2. Install
@@ -15,6 +17,13 @@ gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails
 bundle install
 rails generate rails_notion_like_multiselect:install
 ```
+
+**What the installer does:**
+- Copies `rails_notion_multiselect_controller.js` to `app/javascript/controllers/`
+- Controller is auto-loaded by Stimulus - no manual registration needed
+- Production-ready and optimized for performance
+
+**Architecture Note:** The JavaScript controller must be copied to your app because modern Rails 7+ with importmaps requires Stimulus controllers to be in the app's directory structure for auto-loading to work properly.
 
 ### 3. Example Model Setup
 
@@ -278,11 +287,22 @@ module.exports = {
 
 ### JavaScript not working
 
-Ensure Stimulus is properly configured and the controller is registered:
+**Modern Stimulus Setup (Rails 7+):** The controller is auto-loaded by default. Ensure your `app/javascript/controllers/index.js` has:
 
 ```javascript
 // app/javascript/controllers/index.js
 import { application } from "./application"
+
+// Auto-loads ALL controllers in the controllers directory
+eagerLoadControllersFrom("controllers", application)
+```
+
+**Manual Registration (Only if needed):** If auto-loading isn't working:
+
+```javascript
+// app/javascript/controllers/index.js  
 import RailsNotionMultiselectController from "rails_notion_multiselect_controller"
 application.register("rails-notion-multiselect", RailsNotionMultiselectController)
 ```
+
+**Check the controller file exists:** `app/javascript/controllers/rails_notion_multiselect_controller.js` should be present after running the install generator.

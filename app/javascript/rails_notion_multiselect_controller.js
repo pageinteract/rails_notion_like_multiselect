@@ -63,25 +63,71 @@ export default class extends Controller {
   }
   
   initializeExistingSelections() {
-    // Get existing hidden inputs to restore selections
-    const existingInputs = this.hiddenInputsTarget.querySelectorAll('input[type="hidden"]')
+    // Get existing badges that were rendered by Rails
     const existingBadges = this.selectedItemsTarget.querySelectorAll('[data-item-id]')
     
-    existingInputs.forEach((input, index) => {
-      const itemId = String(input.value) // Ensure ID is a string
-      if (itemId) {
-        const badge = existingBadges[index]
-        if (badge) {
-          const nameText = badge.querySelector('[data-item-name]')?.textContent?.trim() || 
-                          badge.childNodes[0]?.textContent?.trim() || ''
-          if (nameText) {
-            this.selectedItems.set(itemId, nameText)
+    // Process each existing badge to extract its data
+    existingBadges.forEach(badge => {
+      const itemId = badge.dataset.itemId
+      if (!itemId) return
+      
+      // Try multiple ways to get the item name
+      let nameText = ''
+      
+      // Method 1: Look for child span with data-item-name attribute
+      const nameSpan = badge.querySelector('[data-item-name]')
+      if (nameSpan) {
+        // First try the data attribute value
+        nameText = nameSpan.getAttribute('data-item-name')
+        // If empty or "true", get the text content
+        if (!nameText || nameText === '' || nameText === 'true') {
+          nameText = nameSpan.textContent?.trim() || ''
+        }
+      }
+      
+      // Method 2: Get text from first span child
+      if (!nameText) {
+        const firstSpan = badge.querySelector('span:first-child')
+        if (firstSpan) {
+          nameText = firstSpan.textContent?.trim() || ''
+        }
+      }
+      
+      // Method 3: Get any text directly in the badge
+      if (!nameText) {
+        // Get all text nodes in the badge
+        const walker = document.createTreeWalker(
+          badge,
+          NodeFilter.SHOW_TEXT,
+          null,
+          false
+        )
+        let node
+        while (node = walker.nextNode()) {
+          const text = node.textContent?.trim()
+          if (text && text !== '×') {
+            nameText = text
+            break
           }
+        }
+      }
+      
+      // Store the item in our map
+      if (nameText && itemId) {
+        this.selectedItems.set(String(itemId), nameText)
+        
+        // Ensure the badge has proper event handlers
+        const removeBtn = badge.querySelector('button')
+        if (removeBtn && !removeBtn.hasAttribute('data-action')) {
+          removeBtn.setAttribute('data-action', 'click->rails-notion-multiselect#handleRemove')
+          removeBtn.setAttribute('data-item-id', itemId)
         }
       }
     })
     
+    // DON'T call updateDisplay() here - we want to keep the existing badges!
     this.updateSelectedState()
+    this.updateHiddenInputs()
   }
   
   storeAllOptions() {
@@ -607,6 +653,14 @@ export default class extends Controller {
   }
   
   updateDisplay() {
+    // Only update if we have items in our selectedItems map
+    // Don't clear existing badges if selectedItems is empty (like on initial load)
+    if (this.selectedItems.size === 0 && this.selectedItemsTarget.querySelectorAll('[data-item-id]').length > 0) {
+      // We have existing badges but no items in our map yet - don't clear them!
+      // This happens during initialization before initializeExistingSelections runs
+      return
+    }
+    
     // Clear current display
     this.selectedItemsTarget.innerHTML = ''
     
@@ -635,7 +689,7 @@ export default class extends Controller {
       : 'ml-1 group relative h-3.5 w-3.5 rounded-sm hover:bg-gray-600/20 dark:hover:bg-gray-400/20'
     
     span.innerHTML = `
-      <span data-item-name>${this.escapeHtml(itemName)}</span>
+      <span data-item-name="${this.escapeHtml(itemName)}">${this.escapeHtml(itemName)}</span>
       <button type="button" 
               data-action="click->rails-notion-multiselect#handleRemove" 
               data-item-id="${itemId}"
