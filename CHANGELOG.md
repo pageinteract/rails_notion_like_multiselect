@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 2025-09-25
+
+### Added
+- Added `value_method` and `text_method` options for flexible attribute handling
+- Support for objects with custom attribute names (e.g., `slug` instead of `id`, `title` instead of `name`)
+- Enhanced documentation with examples for different data formats
+
+### Enhanced
+- Improved `extract_item_data` method to handle configurable attribute methods
+- Better support for hash formats with custom keys
+- Maintained backward compatibility with existing `id`/`name` defaults
+
+### Use Cases Supported
+- ActiveRecord objects with any attribute names: `value_method: :slug, text_method: :title`
+- Simple string arrays that return selected strings as-is
+- Hash formats with custom keys
+- Mixed data formats in the same collection
+
 ## [0.1.1] - 2025-09-25
 
 ### Fixed

@@ -201,6 +201,55 @@ For server-side creation of new items:
 ) %>
 ```
 
+### With Custom Attributes
+
+For objects with custom attribute names:
+
+```erb
+<!-- Using objects with slug/title instead of id/name -->
+<%= multiselect_field(
+  form,
+  :category_slugs,
+  collection: @categories,           # Objects with .slug and .title methods
+  selected: @game.categories,        # Selected objects
+  value_method: :slug,               # Use slug for the value
+  text_method: :title,               # Use title for display text
+  label: "Categories"
+) %>
+
+<!-- Using hash format with custom keys -->
+<%= multiselect_field(
+  form,
+  :author_ids,
+  collection: [
+    { author_id: 1, full_name: 'John Doe' },
+    { author_id: 2, full_name: 'Jane Smith' }
+  ],
+  selected: [{ author_id: 1, full_name: 'John Doe' }],
+  value_method: :author_id,          # Use author_id for the value
+  text_method: :full_name,           # Use full_name for display text
+  label: "Authors"
+) %>
+```
+
+### With Simple Strings
+
+For simple string arrays:
+
+```erb
+<!-- Strings as both value and display text -->
+<%= multiselect_field(
+  form,
+  :skills,
+  collection: ["Ruby", "JavaScript", "Python", "Go"],
+  selected: ["Ruby", "JavaScript"],
+  allow_create: true,
+  label: "Skills"
+) %>
+
+<!-- Selected values will be the strings themselves: ["Ruby", "JavaScript"] -->
+```
+
 ## Options
 
 | Option         | Type    | Default                 | Description                            |
@@ -215,6 +264,8 @@ For server-side creation of new items:
 | `api_endpoint` | String  | `nil`                   | API endpoint for server-side creation  |
 | `help_text`    | String  | `nil`                   | Help text below the field              |
 | `theme`        | String  | `"auto"`                | Theme mode: "light", "dark", or "auto" |
+| `value_method` | Symbol  | `:id`                   | Method to call for the value/id        |
+| `text_method`  | Symbol  | `:name`                 | Method to call for display text        |
 
 ## Keyboard Shortcuts
 

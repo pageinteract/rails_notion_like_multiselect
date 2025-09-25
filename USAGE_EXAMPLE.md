@@ -6,7 +6,7 @@
 
 ```ruby
 # Gemfile
-gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails_notion_like_multiselect.git', tag: 'v0.1.1'
+gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails_notion_like_multiselect.git', tag: 'v0.1.2'
 ```
 
 ### 2. Install
@@ -87,6 +87,46 @@ end
     theme: "dark",
     help_text: "Select existing tags or create new ones"
   ) %>
+
+  <!-- Using objects with custom attributes -->
+  <%= multiselect_field(
+    form,
+    :author_slugs,
+    collection: @authors,          # Objects with .slug and .full_name methods
+    selected: @game.authors,       # Selected author objects
+    value_method: :slug,           # Use slug for the value (saved to DB)
+    text_method: :full_name,       # Use full_name for display text
+    label: "Authors",
+    badge_color: "purple"
+  ) %>
+
+  <!-- Using hash format with custom keys -->
+  <%= multiselect_field(
+    form,
+    :platform_ids,
+    collection: [
+      { platform_id: 1, platform_name: 'PlayStation 5' },
+      { platform_id: 2, platform_name: 'Xbox Series X' },
+      { platform_id: 3, platform_name: 'Nintendo Switch' }
+    ],
+    selected: @game.selected_platforms || [],  # Array of hashes
+    value_method: :platform_id,    # Use platform_id for the value
+    text_method: :platform_name,   # Use platform_name for display text
+    label: "Gaming Platforms",
+    badge_color: "yellow"
+  ) %>
+
+  <!-- Simple strings for skills/genres -->
+  <%= multiselect_field(
+    form,
+    :skills,
+    collection: ["Ruby on Rails", "JavaScript", "React", "Vue.js", "Python"],
+    selected: @game.required_skills || [],  # Array of strings
+    allow_create: true,
+    label: "Required Skills",
+    badge_color: "red",
+    help_text: "Skills return as strings: ['Ruby on Rails', 'JavaScript']"
+  ) %>
   
   <%= form.submit %>
 <% end %>
@@ -141,6 +181,64 @@ end
   api_endpoint: "/tags",
   item_type: "tag"
 ) %>
+```
+
+## Data Format Use Cases
+
+### Case 1: ActiveRecord Objects with Custom Attributes
+
+When working with ActiveRecord objects that use different attribute names:
+
+```ruby
+# Models with custom attributes
+class Author < ApplicationRecord
+  def slug
+    name.parameterize
+  end
+  
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+end
+
+# In your controller
+@authors = Author.all  # Objects with .slug and .full_name methods
+
+# In your view
+<%= multiselect_field(
+  form,
+  :author_slugs,
+  collection: @authors,
+  selected: @game.authors,
+  value_method: :slug,        # Will save slugs to the database
+  text_method: :full_name,    # Will display full names in dropdown
+  label: "Authors"
+) %>
+
+# Form submission will contain:
+# { game: { author_slugs: ["john-doe", "jane-smith"] } }
+```
+
+### Case 2: Simple String Arrays
+
+When you want to work with simple strings:
+
+```ruby
+# In your controller
+@skills = ["Ruby", "JavaScript", "Python", "Go"]
+
+# In your view
+<%= multiselect_field(
+  form,
+  :required_skills,
+  collection: @skills,
+  selected: @game.required_skills || [],
+  allow_create: true,
+  label: "Required Skills"
+) %>
+
+# Form submission will contain:
+# { game: { required_skills: ["Ruby", "JavaScript", "NewSkill"] } }
 ```
 
 ## Keyboard Shortcuts
