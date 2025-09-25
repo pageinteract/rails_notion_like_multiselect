@@ -6,7 +6,7 @@
 
 ```ruby
 # Gemfile
-gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails_notion_like_multiselect.git', tag: 'v0.1.2'
+gem 'rails_notion_like_multiselect', git: 'https://github.com/pageinteract/rails_notion_like_multiselect.git', tag: 'v0.2.0'
 ```
 
 ### 2. Install
