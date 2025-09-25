@@ -285,8 +285,6 @@ module RailsNotionLikeMultiselect
           label_html + input_container_html + dropdown_html + hidden_inputs_html + help_text_html
         end
 
-        private
-
         # Extracts id and name from various item formats (objects, hashes, strings)
         # Returns [id, name] as strings
         # @param item [Object] The item to extract data from
