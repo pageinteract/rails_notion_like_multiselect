@@ -18,6 +18,8 @@ module RailsNotionLikeMultiselect
       # @option options [String] :api_endpoint API endpoint for creating new items
       # @option options [String] :help_text Help text to display below the field
       # @option options [String] :theme Theme mode ('light', 'dark', or 'auto')
+      # @option options [Symbol] :value_method Method to call for the value/id (default: :id for objects, self for strings)
+      # @option options [Symbol] :text_method Method to call for display text (default: :name for objects, self for strings)
       #
       def multiselect_field(form, field, options = {})
         collection = options[:collection] || []
@@ -30,6 +32,8 @@ module RailsNotionLikeMultiselect
         api_endpoint = options[:api_endpoint]
         help_text = options[:help_text]
         theme = options[:theme] || 'auto'
+        value_method = options[:value_method] || :id
+        text_method = options[:text_method] || :name
         input_name = "#{form.object_name}[#{field}][]"
 
         # Determine theme-specific classes based on theme option
@@ -155,8 +159,7 @@ module RailsNotionLikeMultiselect
                                               data: { rails_notion_multiselect_target: 'selectedItems' },
                                               class: 'flex flex-wrap gap-1.5 items-center' do
               selected.map do |item|
-                item_id = item.respond_to?(:id) ? item.id.to_s : item.to_s
-                item_name = item.respond_to?(:name) ? item.name : item.to_s
+                item_id, item_name = extract_item_data(item, value_method, text_method)
 
                 content_tag :span,
                             class: badge_classes,
@@ -221,10 +224,9 @@ module RailsNotionLikeMultiselect
                         data: { rails_notion_multiselect_target: 'optionsList' },
                         class: 'max-h-60 overflow-auto py-1' do
               collection.map do |item|
-                item_id = item.respond_to?(:id) ? item.id.to_s : item.to_s
-                item_name = item.respond_to?(:name) ? item.name : item.to_s
+                item_id, item_name = extract_item_data(item, value_method, text_method)
                 is_selected = selected.any? { |s| 
-                  s_id = s.respond_to?(:id) ? s.id.to_s : s.to_s
+                  s_id, _ = extract_item_data(s, value_method, text_method)
                   s_id == item_id
                 }
 
@@ -258,7 +260,7 @@ module RailsNotionLikeMultiselect
           hidden_inputs_html = content_tag :div, data: { rails_notion_multiselect_target: 'hiddenInputs' } do
             if selected.any?
               selected.map do |item|
-                item_id = item.respond_to?(:id) ? item.id.to_s : item.to_s
+                item_id, _ = extract_item_data(item, value_method, text_method)
                 tag.input(type: 'hidden', name: input_name, value: item_id)
               end.join.html_safe
             else
@@ -281,6 +283,28 @@ module RailsNotionLikeMultiselect
                            end
 
           label_html + input_container_html + dropdown_html + hidden_inputs_html + help_text_html
+        end
+
+        private
+
+        # Extracts id and name from various item formats (objects, hashes, strings)
+        # Returns [id, name] as strings
+        # @param item [Object] The item to extract data from
+        # @param value_method [Symbol] Method to call for the value/id
+        # @param text_method [Symbol] Method to call for display text
+        def extract_item_data(item, value_method = :id, text_method = :name)
+          if item.respond_to?(value_method) && item.respond_to?(text_method)
+            # ActiveRecord object or similar with custom methods
+            [item.send(value_method).to_s, item.send(text_method).to_s]
+          elsif item.is_a?(Hash)
+            # Hash with symbol or string keys
+            id = item[value_method] || item[value_method.to_s] || item[:id] || item['id']
+            name = item[text_method] || item[text_method.to_s] || item[:name] || item['name']
+            [id.to_s, name.to_s]
+          else
+            # Fallback - treat as string/number (both value and display are the same)
+            [item.to_s, item.to_s]
+          end
         end
       end
     end
